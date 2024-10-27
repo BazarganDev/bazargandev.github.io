@@ -7,6 +7,75 @@
     <title>Project: ISS Insight</title>
 </head>
 <body>
-    <h1>This page will be ready soon...</h1>
+    <h1 align="center">Project: ISS Insight 🛰️</h1>
+    <hr>
+    <h3>Description</h3>
+    <p>
+        It is a Python program that fetches the TLE set of the ZARYA component of the International Space Station from <a href="https://celestrak.org/">Celestrak</a>,
+        calculates its position on future times, and predicts its orbit based on those positions, then visualizes its trajectory on an interactive map
+        using <a href="https://python-visualization.github.io/folium/latest/index.html">Folium</a>. In this blog, I will walk you through the project and
+        provide you some important key concepts that will give you a solid understanding of the logic behind the program.
+    </p>
+    <h3>Why tracking the ISS?</h3>
+    <p>
+        I always wanted to know about satellites and track their route if possible. Well, one my dreams is now completed :). I know my own reasons
+        for creating such a program, I just can't put it in words. But if you are curious about the reason, I can give you this
+        poet-like answer if you don't mind:<br><br>
+        <q>
+            I developed this program to track the ISS because I am fascinated by the intersection of technology and space exploration. The ability to
+            observe the ISS as it orbits the Earth not only deepens my appreciation for human ingenuity and scientific achievement but also connects me
+            to the broader universe. By tracking satellites, I can engage with the dynamic nature of our planet and the advancements in space technology,
+            fostering a sense of wonder and curiosity about what lies beyond our atmosphere. This project allows me to combine my love for programming
+            with my interest in space, creating a tangible way to explore and understand the cosmos.
+        </q>
+    </p>
+    <h3>Key Concepts</h3>
+    <h4># What is a TLE set?</h4>
+    <p>
+        Two-Line Element Set (TLE) is a standardized format used to describe the orbit of a satellite. It consists of two lines of data that include important
+        orbital parameters, such as the satellite's position, velocity, and other relevant information at a specific time known as the epoch.
+        (Source: <a href="https://en.wikipedia.org/wiki/Two-line_element_set">Two-line element set</a>)
+    </p>
+    <h4># What is a Geocentric Position?</h4>
+    <p>
+        A geocentric position refers to a viewpoint or coordinate system that is centered on the Earth. In astronomy, it describes a model where the Earth is
+        considered the center of the universe, with celestial bodies like the Sun and planets (or even satellites) orbiting around it.
+        (Sources: <a href="https://en.wikipedia.org/wiki/Earth-centered,_Earth-fixed_coordinate_system">Earth-centered, Earth-fixed coordinate system</a>, <a href="https://en.wikipedia.org/wiki/Geocentric_model">Geocentric model</a>)
+    </p>
+    <h4># What is a Subpoint Position?</h4>
+    <p>
+        In Astronomy, the subpoint position (or subsatellite point) of a satellite refers to the point on the Earth's surface that is directly beneath the
+        satellite at any given moment. It is defined by its geographical coordinates, latitude and longitude. This point is significant because it represents
+        the satellite's ground track, which is the path that the satellite appears to trace over the Earth's surface as it orbits.
+        (Sources: <a href="https://www.ngs.noaa.gov/PUBS_LIB/Geodesy4Layman/TR80003D.HTM#ZZ9">"Geodesy for the Layman" by U.S. Geological Survey</a>, <a href="https://books.google.com/books/about/Satellite_Communications_Fourth_Edition.html?id=2KEt_hFyjwgC">"Satellite Communications" by Dennis Roddy</a>)
+    </p>
+    <h4># What is International Date Line (IDL)?</h4>
+    <p>
+        The International Date Line is an imaginary line that runs from the North Pole to the South Pole, primarily along the 180th meridian in the Pacific Ocean.
+        It serves as the boundary between two consecutive calendar dates, meaning when you cross it, you either gain or lose a day depending on the direction you
+        are traveling.
+        (Source: <a href="https://www.livescience.com/44292-international-date-line-explained.html">The international date line, explained</a>, <a href="https://www.britannica.com/topic/International-Date-Line">International Date Line</a>)
+    </p>
+    <h3>A Very Important Block of Code</h3>
+    <p>
+        I can tell that if there was only one important block of code in the script, it would definitely be this: <br><br>
+        <img id="code-block-iss-insight" src="images/code_block_iss_insight.png" alt="code_block"> <br><br>
+        Let's break it down: <br>
+        On line 1, the <code id="code-snippet">orbit_coordinates</code> list holds the trajectory points. On line 2, <code id="code-snippet">future_sat_lon</code>
+        variable represents the future longitude of the ISS at a specific time and <code id="code-snippet">orbit_coordinates[-1][1]</code> accesses the last recorded longitude from a list of
+        previous coordinates. This line calculates the absolute difference between the current future longitude and the last recorded longitude. If this difference
+        exceeds 180 degrees, it indicates that the satellite has crossed the IDL.
+    </p>
+    <h4># Now, why does it matter?</h4>
+    <p>
+        When tracking a satellite's position over time, you may encounter situations where the longitude values can "jump" significantly due to the way longitude
+        is measured. Longitude is expressed in degrees, ranging from -180 to +180 or 0 to 360. The International Date Line (IDL) is located at approximately 180
+        degrees longitude. Crossing this line can cause a sudden change in the longitude value, which can be problematic for visualizing paths on a map. In general,
+        handling the IDL problem matters in terms of:
+        <ul>
+            <li><b>Visualization:</b> If you don't adjust for these jumps, the path drawn on a map could appear discontinuous or erratic, making it difficult to understand the satellite's actual trajectory.</li>
+            <li><b>Data Integrity:</b> Ensuring that longitude values are consistent helps maintain data integrity, especially when plotting or analyzing satellite paths.</li>
+        </ul>
+    </p>
 </body>
 </html>
