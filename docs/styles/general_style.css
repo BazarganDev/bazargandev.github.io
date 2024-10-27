@@ -19,3 +19,7 @@ a:hover {
     padding: 3px;
     border-radius: 5px;
 }
+
+#paragraph-begin {
+    font-size: 80px;
+}
